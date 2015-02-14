@@ -106,7 +106,7 @@ Yes, you can change field order of custom fields by drag and drop method in dash
 2. Edit Field.
 3. Edit Form.
 4. Drag and Drop Field Manager.
-5. Front-end form.
+5. Sample Form
 
 == Changelog ==
 
