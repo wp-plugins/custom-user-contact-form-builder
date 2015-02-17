@@ -3,7 +3,7 @@
 	Plugin Name: Contact Form Pro
 	Plugin URI: https://wordpress.org/plugins/custom-user-contact-form-builder/
 	Description: An easy to use, simple but powerful contact form system that also tracks submissions through a nifty interface. You can create unlimited forms with custom fields and use them through WordPress shortcode system.
-	Version: 1.0
+	Version: 1.0.1
 	Author: CMSHelpLive
 	Author URI: https://profiles.wordpress.org/cmshelplive
 	License: gpl2
@@ -147,7 +147,7 @@ function cfp_admin_script() {
 add_action('admin_menu', 'contact_form_pro_menu');
 function contact_form_pro_menu()
 {
-	add_menu_page("Contact Form Pro","Contact Form Pro","manage_options","cfp_manage_forms","cfp_manage_forms","dashicons-feedback");
+	add_menu_page("Contact Form Pro","Contact Form Pro","manage_options","cfp_manage_forms","cfp_manage_forms","dashicons-feedback","28.02");
 	add_submenu_page("","Add Form","Add Form","manage_options","cfp_add_form","cfp_add_form");
 	add_submenu_page("cfp_manage_forms","Settings","Settings","manage_options","cfp_settings","cfp_settings");
 	add_submenu_page("cfp_manage_forms","Submissions","Submissions","manage_options","cfp_entries","cfp_entries");
@@ -156,6 +156,19 @@ function contact_form_pro_menu()
 	add_submenu_page("","Add Field","Add Field","manage_options","cfp_add_field","cfp_add_field");
 	/*add_submenu_page("cfp_manage_forms","Pro Features","Pro Features","manage_options","cfp_Pro","cfp_Pro");*/
 }
+
+function add_cfp_menu_adminbar() {
+	global $wp_admin_bar;
+
+	$wp_admin_bar->add_menu( array(
+		'id'    => 'cfp_add_form',
+		'title' => 'Form',
+		'href'  => admin_url().'admin.php?page=cfp_add_form',
+		'parent'=>'new-content'
+	));
+}
+add_action( 'wp_before_admin_bar_render', 'add_cfp_menu_adminbar' ); 
+
 
 function cfp_Pro()
 {
