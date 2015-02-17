@@ -1,7 +1,8 @@
 === Contact Form Pro ===
 Contributors: CMSHelpLive
 Donate link: http://cmshelplive.com/
-Tags: custom form fields, wordpress custom fields, wordpress custom contact, form autoresponder, terms and conditions checkbox, form terms and conditions, form required fields, auto generate password, simple contact form, easy contact form, wordpress form save, save form submissions, wordpress, wordpress simple contact form, form success message, wordpress form redirect, wordpress form success message,wordpress form manager, create wordpress forms, custom contact, custom contact form fields, custom contact fields, multiple contact forms, wordpress contact form, customize wordpress contact form, advance contact form for wordpress, contact form manager, 
+Tags: custom contact, custom form fields, custom contact fields, multiple contact forms, wordpress contact form, customize wordpress contact form, advance contact form for wordpress, contact form manager, wordpress custom fields, wordpress custom contact, form autoresponder, terms and conditions checkbox, form terms and conditions, form required fields, auto generate password, simple contact form, simple contact form, easy contact form, easy contact form, wordpress form save, save form submissions, wordpress simple contact form, wordpress simple contact form, form success message, wordpress form redirect, wordpress form success message,wordpress form manager, create wordpress forms, wordpress user contact plugin, wordpress new user contact, new user contact wordpress, contact form wordpress, wordpress user contact captcha, user contact plugin for wordpress, wordpress plugin for contact form, custom contact, custom contact form fields, custom contact fields, multiple contact forms, wordpress contact form, customize wordpress contact form, advance contact form for wordpress, contact form manager, form IP capture, form browser capture, form submit user location,
+
 
 Requires at least: 3.5
 Tested up to: 4.1
@@ -9,22 +10,27 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Create awesome looking contact forms for your WordPress site with simple clicks. 
+Simple yet powerful custom registration form builder that allows you to create awesome customized contact forms.
+
 
 == Description ==
 
 
-Unique Name: This is the name of your form. It will help you identify the form on forms manager page. Unique Name is not visible on the front end of your website.
+Contact Form Pro is an easy to use form creating system that allows you to create any type of forms with few simple clicks. We have put focus squarely on ease of use, since we thought almost all other form plugins throws loads of features right on users’ screens when all they need is a quick and intuitive form creation and management process. 
 
-Form Description: Administrative field to describe the form. Not visible on the front end.
+As soon as you activate the plugin and go to “Contact Form Pro” link in the left menu, you see our elegant forms manager to manager all your WordPress forms. When you fist visit the page, forms area will be empty and you will see “Add New” button on top bar to start creating WordPress forms. When you click it, you will be taken to a new page with following fields:
 
-Redirection: Option to redirect visitors to a specific page already created on your website or to a specific URL. Handy to show information once the form is submitted.
+= Unique Name: = This is the name of your form. It will help you identify the form on forms manager page. Unique Name is not visible on the front end of your website.
 
-Header Text: This is the text you want to show above your form to your site visitors.
+= Form Description: = Administrative field to describe the form. Not visible on the front end.
 
-Auto-Responder Toggle: Allows you to create and send an automatic message to form submitter. You can decide message subject and text. If it is off, no message will be sent.
+= Redirection: = Option to redirect visitors to a specific page already created on your website or to a specific URL. Handy to show information related to contact once the form is submitted.
 
-Success Message: Message displayed to the user after successfully submitting the form. This is different from redirection. Success message stays for 5 seconds before redirecting the visiter. 
+= Header Text: = This is the text you want to show above your form to your site visitors.
+
+= Auto-Responder Toggle: = Allows you to create and send an automatic message to form submitter. You can decide message subject and text. If it is off, no message will be sent.
+
+= Success Message: = Message displayed to the user after successfully submitting the form. This is different from redirection. Success message stays for 5 seconds before redirecting the visiter. 
 
 Once created, each form is represented by a square card that displays important information about the form at a glance and quick editing buttons. Multi-select boxes allow you to clone or delete forms with single click.
 
@@ -38,7 +44,7 @@ A small gear icon takes you to Global Settings.
 
 Each form card also displays “shortcode” required to display the forms on your site. Copy the short code and paste it inside a page, post or custom widget to display the form on your WordPress website.
 
-Here’s quick overview of features:
+= Here’s quick overview of features: = 
 
 * Forms Manager to create, edit and manage your WordPress forms with few simple clicks.
 * Fully customizable forms.
@@ -59,7 +65,9 @@ Here’s quick overview of features:
 * Show Terms and Conditions checkbox
 * Advance field options like CSS and character length.
 * View and Delete individual submission entries
-
+* Option to capture IP location of the form submitter
+* Option to capture Browser and OS information of the form submitter
+* View Geo Location through Submission details
 
 
 
