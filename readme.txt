@@ -10,13 +10,13 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simple yet powerful custom registration form builder that allows you to create awesome customized contact forms.
+Simple yet powerful WordPress Contact Form Builder that allows you to create awesome customized contact forms.
 
 
 == Description ==
 
 
-Contact Form Pro is an easy to use form creating system that allows you to create any type of forms with few simple clicks. We have put focus squarely on ease of use, since we thought almost all other form plugins throws loads of features right on users’ screens when all they need is a quick and intuitive form creation and management process. 
+Looking for a reliable Wordpress contact form? Here’s your answer - Contact Form Pro is an easy to use form creating system that allows you to create any type of forms with few simple clicks. We have put focus squarely on ease of use, since we thought almost all other form plugins throws loads of features right on users’ screens when all they need is a quick and intuitive form creation and management process. Contact Form Pro is a reliable Wordpress contact form plugin that takes care of all your contact form needs.
 
 As soon as you activate the plugin and go to “Contact Form Pro” link in the left menu, you see our elegant forms manager to manager all your WordPress forms. When you fist visit the page, forms area will be empty and you will see “Add New” button on top bar to start creating WordPress forms. When you click it, you will be taken to a new page with following fields:
 
@@ -30,11 +30,11 @@ As soon as you activate the plugin and go to “Contact Form Pro” link in the 
 
 = Auto-Responder Toggle: = Allows you to create and send an automatic message to form submitter. You can decide message subject and text. If it is off, no message will be sent.
 
-= Success Message: = Message displayed to the user after successfully submitting the form. This is different from redirection. Success message stays for 5 seconds before redirecting the visiter. 
+= Success Message: = Message displayed to the user after successfully submitting the Wordpress contact form. This is different from redirection. Success message stays for 5 seconds before redirecting the visiter. 
 
-Once created, each form is represented by a square card that displays important information about the form at a glance and quick editing buttons. Multi-select boxes allow you to clone or delete forms with single click.
+Once created, each Wordpress contact form is represented by a square card that displays important information about the form at a glance and quick editing buttons. Multi-select boxes allow you to clone or delete forms with single click.
 
-Next important step is creating custom fields for your WordPress form. Click “Fields” button on the form card you want to edit. This will take you to a new page. Available fields are displayed as red pills on the top bar. Clicking any field will take you to field parameters page. 
+Next important step is creating custom fields for your Wordpress contact form. Click “Fields” button on the form card you want to edit. This will take you to a new page. Available fields are displayed as red pills on the top bar. Clicking any field will take you to field parameters page. 
 
 Once saved, the fields will appear as white horizontal bars with drag and drop handle on left, which can be used for rearranging order. You can quickly change the form using drop down menu on top right.
 
