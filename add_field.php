@@ -70,7 +70,7 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#desfield').hide();
                 jQuery('#maxlenghtfield').show();
                 jQuery('#requirefield').show();
-                jQuery('#visibilityfield').show();
+                jQuery('#visibilityfield').hide();
                 jQuery('#rulesfield').show();
                 jQuery('#readonlyfield').hide();
                 jQuery('#registrationformfield').show();
@@ -104,8 +104,8 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#optionsfield').show();
                 jQuery('#desfield').hide();
                 jQuery('#valuefield').show();
-                jQuery('#requirefield').hide();
-                jQuery('#visibilityfield').show();
+                jQuery('#requirefield').show();
+                jQuery('#visibilityfield').hide();
                 jQuery('#rulesfield').show();
                 jQuery('#readonlyfield').show();
                 jQuery('#registrationformfield').show();
@@ -123,7 +123,7 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#classfield').show();
                 jQuery('#desfield').hide();
                 jQuery('#requirefield').show();
-                jQuery('#visibilityfield').show();
+                jQuery('#visibilityfield').hide();
                 jQuery('#rulesfield').show();
                 jQuery('#readonlyfield').show();
                 jQuery('#registrationformfield').show();
@@ -139,9 +139,9 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#namefield').show();
                 jQuery('#classfield').show();
                 jQuery('#desfield').hide();
-                jQuery('#requirefield').show();
-                jQuery('#visibilityfield').show();
-                jQuery('#rulesfield').show();
+                jQuery('#requirefield').hide();
+                jQuery('#visibilityfield').hide();
+                jQuery('#rulesfield').hide();
                 jQuery('#readonlyfield').hide();
                 jQuery('#registrationformfield').show();
                 jQuery('#submit_field').show();
@@ -157,8 +157,8 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#classfield').show();
                 jQuery('#desfield').hide();
                 jQuery('#requirefield').hide();
-                jQuery('#visibilityfield').show();
-                jQuery('#rulesfield').show();
+                jQuery('#visibilityfield').hide();
+                jQuery('#rulesfield').hide();
                 jQuery('#readonlyfield').hide();
                 jQuery('#registrationformfield').show();
                 jQuery('#submit_field').show();
@@ -174,7 +174,7 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#classfield').hide();
                 jQuery('#desfield').hide();
                 jQuery('#requirefield').show();
-                jQuery('#visibilityfield').show();
+                jQuery('#visibilityfield').hide();
                 jQuery('#rulesfield').show();
                 jQuery('#readonlyfield').hide();
                 jQuery('#registrationformfield').show();
@@ -222,6 +222,9 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
             }
             if (a == 'paragraph') {
                 jQuery('.info').html('This Paragraph field is working only for "Registration" and "Edit Profile" page.');
+				jQuery('#optionsfield .cfp-label').html('Paragraph Text');
+				jQuery('#valuefield').hide();
+				jQuery('#optionsfield').show();
                 jQuery('.info').show();
             }
             if (a == 'email' || a == 'number') {
@@ -229,7 +232,24 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
                 jQuery('#classfield').show();
                 jQuery('#desfield').hide();
                 jQuery('#requirefield').show();
-                jQuery('#visibilityfield').show();
+                jQuery('#visibilityfield').hide();
+                jQuery('#rulesfield').show();
+                jQuery('#readonlyfield').hide();
+                jQuery('#registrationformfield').show();
+                jQuery('#submit_field').show();
+                jQuery('#orderingfield').show();
+                jQuery('#maxlenghtfield').hide();
+                jQuery('#colsfield').hide();
+                jQuery('#rowsfield').hide();
+                jQuery('#optionsfield').hide();
+                jQuery('#valuefield').hide();
+            }
+			if (a == 'country' || a=='timezone') {
+                jQuery('#namefield').show();
+                jQuery('#classfield').show();
+                jQuery('#desfield').hide();
+                jQuery('#requirefield').show();
+                jQuery('#visibilityfield').hide();
                 jQuery('#rulesfield').show();
                 jQuery('#readonlyfield').hide();
                 jQuery('#registrationformfield').show();
@@ -287,6 +307,8 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
           <option value="DatePicker" <?php if(isset($str) && $str=='DatePicker') echo 'selected'; ?>><?php _e( 'Date Picker', $textdomain ); ?></option>
           <option value="email" <?php if(isset($str) && $str=='email') echo 'selected'; ?>><?php _e( 'Email', $textdomain ); ?></option>
           <option value="number" <?php if(isset($str) && $str=='number') echo 'selected'; ?>><?php _e( 'Number', $textdomain ); ?></option>
+          <option value="country" <?php if(isset($str) && $str=='country') echo 'selected'; ?>><?php _e( 'Country', $textdomain ); ?></option>
+          <option value="timezone" <?php if(isset($str) && $str=='timezone') echo 'selected'; ?>><?php _e( 'Timezone', $textdomain ); ?></option>
           <option value="term_checkbox" <?php if(isset($str) && $str=='term_checkbox') echo 'selected'; ?>><?php _e( 'Terms & Conditions Checkbox', $textdomain ); ?></option>
           	<?php
 			/*file addon start */
@@ -307,7 +329,7 @@ wp_redirect('admin.php?page=cfp_manage_form_fields&form_id='.$_POST['form_id']);
         </div>
       </div>
       <div class="cfp-form-right-area">
-        <input type="text" name="field_name" id="field_name" value="<?php if(!empty($reg)) echo $reg->Name; ?>" required onKeyUp="check('<?php if(!empty($reg)){echo $reg->Name;}else { echo 'new';} ?>','<?php if(isset($_REQUEST['formid'])) echo $_REQUEST['formid']?>')">
+        <input type="text" name="field_name" id="field_name" value="<?php if(!empty($reg)) echo $reg->Name; ?>" required onKeyUp="check('<?php if(!empty($reg)){echo $reg->Name;}else { echo 'new';} ?>','<?php if(isset($_REQUEST['formid'])) echo $_REQUEST['formid']?>')" onBlur="check('<?php if(!empty($reg)){echo $reg->Name;}else { echo 'new';} ?>','<?php if(isset($_REQUEST['formid'])) echo $_REQUEST['formid']?>')">
         <div id="user-result"></div>
       </div>
     </div>

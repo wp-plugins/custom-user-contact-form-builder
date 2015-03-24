@@ -25,7 +25,7 @@ if(isset($_REQUEST['delete_entry']) && isset($_REQUEST['id']))
 
 $qry = "select form_name from $cfp_forms where id=".$entry->form_id;
 $form_name = $wpdb->get_var($qry);
-$value = @unserialize($entry->value);
+$value = maybe_unserialize($entry->value);
 
 if(isset($_REQUEST['user_enable']) && isset($_REQUEST['id']))
 {
@@ -83,7 +83,7 @@ if(isset($_REQUEST['user_enable']) && isset($_REQUEST['id']))
 	   {
 		  if(!empty($row1))
 		  {
-			  $Customfield = str_replace(" ","_",$row1->Name);
+			  $Customfield = sanitize_key($row1->Name).$row1->Id;
 			  if(!isset($prev_value)) $prev_value='';
 			  add_user_meta( $user_id, $Customfield, $value[$Customfield], true );
 			  update_user_meta( $user_id, $Customfield, $value[$Customfield], $prev_value );
@@ -171,21 +171,58 @@ if(!empty($value))
 			$val = implode(',',$val);	
 		}
 		$Customfield = str_replace("_"," ",$key);
+		$fields= explode("_", $key);
+		$fieldid = $fields[count($fields)-1];
+		if(is_numeric($fieldid))
+		{
+			$qry = "select Name from $cfp_fields where id=".$fieldid;
+			$Customfield = $wpdb->get_var($qry);
+		}
+		
 		/*file addon start */
 		global $filefields; 
 		if(isset($filefields) && in_array($key,$filefields)) continue;
 		/*file addon end */
-		if($key!="user_pass" && $key!="user_ip"):
+		
+		if($key!="user_pass" && $key!="User_IP" && $key!="user_ip" && $key!="Browser"):
   		?>
       <p><span class="entry_heading"><?php echo $Customfield; ?> : </span><span class="entry_Value"><?php echo $val; ?></span></p>
       <?php
 		endif;
 		
-		if($key=="user_ip"):
+		if($key=="User_IP" || $key=="user_ip"):
   		?>
       <p><span class="entry_heading"><?php echo $Customfield; ?> : </span><span class="entry_Value" ><?php echo $val; ?></span><span class="entry_Value" style="padding-left:10px;"><a style="color:#ff6c6c;" target="_blank" href="http://www.geoiptool.com/?IP=<?php echo $val; ?>">View Location</a></span></p>
       <?php
 		endif;
+		
+		if($key=="Browser"):
+		$ExactBrowserNameUA=$val;
+		if(strpos(strtolower($ExactBrowserNameUA), "safari/") and strpos(strtolower($ExactBrowserNameUA), "opr/")) {
+			// OPERA
+			$ExactBrowserNameBR="Opera";
+		} elseif (strpos(strtolower($ExactBrowserNameUA), "safari/") and strpos(strtolower($ExactBrowserNameUA), "chrome/")) {
+			// CHROME
+			$ExactBrowserNameBR="Chrome";
+		} elseif (strpos(strtolower($ExactBrowserNameUA), "msie")) {
+			// INTERNET EXPLORER
+			$ExactBrowserNameBR="Internet Explorer";
+		} elseif (strpos(strtolower($ExactBrowserNameUA), "firefox/")) {
+			// FIREFOX
+			$ExactBrowserNameBR="Firefox";
+		} elseif (strpos(strtolower($ExactBrowserNameUA), "safari/") and strpos(strtolower($ExactBrowserNameUA), "opr/")==false and strpos(strtolower($ExactBrowserNameUA), "chrome/")==false) {
+			// SAFARI
+			$ExactBrowserNameBR="Safari";
+		} else {
+			// OUT OF DATA
+			$ExactBrowserNameBR="Other";
+		};
+		
+		?>
+ <p><span class="entry_heading"><?php echo $Customfield; ?> : </span><span class="entry_Value" ><?php echo $ExactBrowserNameBR; ?></span></p>
+      <?php
+		endif;
+		
 	}
 	/*file addon start */
 	if(isset($attachment_html))

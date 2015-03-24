@@ -14,7 +14,7 @@ if(!empty($_POST['selected']) && isset($_POST['copy']))
 	{
 	foreach($results as $entry)
 	{
-		$qry = "insert into $cfp_forms values('','".$entry->form_name."','".$entry->form_desc."','".$entry->form_type."','".$entry->custom_text."','".$entry->cfp_welcome_email_subject."','".$entry->success_message."','".$entry->cfp_welcome_email_message."','".$entry->redirect_option."','".$entry->redirect_page_id."','".$entry->redirect_url_url."','".$entry->send_email."')";	
+		$qry = "insert into $cfp_forms values('','".$entry->form_name."','".$entry->form_desc."','".$entry->form_type."','".$entry->custom_text."','".$entry->cfp_welcome_email_subject."','".$entry->success_message."','".$entry->cfp_welcome_email_message."','".$entry->redirect_option."','".$entry->redirect_page_id."','".$entry->redirect_url_url."','".$entry->send_email."','".$entry->form_option."')";	
 		$wpdb->query($qry);	
 	}
 	}
@@ -38,12 +38,10 @@ $entries = $wpdb->get_results( "SELECT * FROM $cfp_forms order by id asc LIMIT $
 
 <form name="forms" id="forms" method="post" action="admin.php?page=cfp_manage_forms" >
 <div class="ucf_pro_banner" style="margin-bottom:0 !important; overflow:visible;">
+<div class="analytics_banner"><a href="admin.php?page=analytics_demo"><img src="<?php echo $path;?>images/analytics_banner.jpg" /></a></div>
 
 	<div class="banner" id="bannerclose">
-       <div  class="shap">
-      <h3>Welcome to Contact Form Pro!</h3> 
-    <p>If you like it, <span><a href="https://wordpress.org/support/view/plugin-reviews/custom-user-contact-form-builder" style="color:#fff;" target="_blank">please rate it</a></span> on WordPress.org. Your few kind words mean a lot to us.</p>
-    </div>
+       <a href="admin.php?page=cfp_Pro"><img src="<?php echo $path;?>images/ucf_form_banner.jpg" /></a>
      </div>
 
 
@@ -110,7 +108,7 @@ foreach($entries as $row)
 	}
 ?>
     <!--HTML when there are already custom fields associated with selected user role-->  
-    <div class="cfp-row-result">
+    <div class="cfp-row-result js-zeroclipboard-container">
       <div class="cfp-form-name">
         <?php 
 $length = strlen($row->form_name);
@@ -128,7 +126,7 @@ echo $Valuehalf.'...';
       <div class="cfp-form-submissions"><?php _e( 'Submissions', $textdomain ); ?></div>
       <div class="cfp-form-rest"><a href="admin.php?page=cfp_entries&form_id=<?php echo $row->id;?>"><?php echo $submission;?></a></div>
       <div class="cfp-form-shortcode"><?php _e( 'Shortcode', $textdomain ); ?></div>
-      <div class="cfp-form-shortcode-name">[CFP_Form id='<?php echo $row->id;?>']</div>
+      <div class="cfp-form-shortcode-name cfp-copy" onMouseOver="cfptooltip1(this)" onClick="cfptooltip2(this)" title="Click to copy to clipboard." data-clipboard-text="[CFP_Form id='<?php echo $row->id;?>']">[CFP_Form id='<?php echo $row->id;?>']</div>
       <div class="cfp-form-shortcode-type" style="visibility:hidden;"><?php _e( 'Type', $textdomain ); ?></div>
       <div class="cfp-form-shortcode-type-name" style="visibility:hidden;">
         <?php if($row->form_type=='reg_form')echo 'Registration'; else echo 'Contact Form';?>
@@ -237,4 +235,34 @@ function bannertoggle()
 	return false;
 }
 </script>
+<script>
+var swfPath = ZeroClipboard.config("swfPath");
+var client = new ZeroClipboard( jQuery(".cfp-copy") );
+</script>
+<script>
+function cfptooltip1(a)
+{
+	jQuery(a).tooltip({
+		content:'Copy to Clipboard'		
+		});	
+}
 
+function cfptooltip2(a)
+{
+	jQuery(a).tooltip({
+		content:'Copied!'
+		});	
+}
+</script>
+<style>
+.cfp-copy {
+	cursor:pointer; 
+  }
+  .ui-tooltip {
+    padding: 5px 10px;
+    color: white;
+	background:#000;
+	border:none;
+	box-shadow:none;
+  }
+</style>

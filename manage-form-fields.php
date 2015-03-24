@@ -67,6 +67,8 @@ echo $Valuehalf.'...';
             <input type="button" id="DatePicker" name="DatePicker" value="DatePicker" class="button" onClick="add_field(this.value)">
             <input type="button" id="email" name="email" value="email" class="button" onClick="add_field(this.value)">
             <input type="button" id="number" name="number" value="number" class="button" onClick="add_field(this.value)">
+            <input type="button" id="country" name="country" value="country" class="button" onClick="add_field(this.value)">
+            <input type="button" id="timezone" name="timezone" value="timezone" class="button" onClick="add_field(this.value)">
             <input type="button" id="term_checkbox" name="term_checkbox" value="term_checkbox" class="button" onClick="add_field(this.value)">
             
           </div>
@@ -143,7 +145,7 @@ echo $fieldnamehalf.'...';
             update: function (event, ui) {
                 var list_sortable = jQuery(this).sortable('toArray').toString();
                 // change order in the database using Ajax
-                jQuery.post('<?php echo get_option('siteurl').'/wp-admin/admin-ajax.php';?>?action=set_field_order&cookie=encodeURIComponent(document.cookie)', {
+                jQuery.post('<?php echo get_option('siteurl').'/wp-admin/admin-ajax.php';?>?action=cfp_set_field_order&cookie=encodeURIComponent(document.cookie)', {
                         'list_order': list_sortable
                     },
                     function (data) {});

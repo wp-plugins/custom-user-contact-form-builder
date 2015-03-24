@@ -6,7 +6,7 @@ Tags: custom contact, custom form fields, custom contact fields, multiple contac
 
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,10 @@ Yes, you can change field order of custom fields by drag and drop method in dash
 
 == Changelog ==
 
+= 2.0 =
+* Multiple Bug Fixes
+* Usability Improvements
+
 = 1.0.2 =
 * Added option for setting default value for text fields
 
@@ -130,6 +134,10 @@ Yes, you can change field order of custom fields by drag and drop method in dash
 
 
 == Upgrade Notice ==
+
+= 2.0 =
+* Multiple Bug Fixes
+* Usability Improvements
 
 = 1.0.2 =
 * Added option for setting default value for text fields

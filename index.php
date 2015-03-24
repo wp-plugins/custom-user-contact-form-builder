@@ -3,7 +3,7 @@
 	Plugin Name: Contact Form Pro
 	Plugin URI: https://wordpress.org/plugins/custom-user-contact-form-builder/
 	Description: An easy to use, simple but powerful contact form system that also tracks submissions through a nifty interface. You can create unlimited forms with custom fields and use them through WordPress shortcode system.
-	Version: 1.0.2
+	Version: 2.0
 	Author: CMSHelpLive
 	Author URI: https://profiles.wordpress.org/cmshelplive
 	License: gpl2
@@ -11,18 +11,29 @@
 ob_start();
 /*Plugin activation hook*/
 global $cfp_db_version;
-$cfp_db_version = 1.4;
+$cfp_db_version = 1.7;
 
 register_activation_hook ( __FILE__, 'activate_contact_form_pro_plugin' );
 function activate_contact_form_pro_plugin()
 {
-	add_option('cfp_db_version','1.4');
+	add_option('cfp_db_version','1.7');
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	global $wpdb;
 	$cfp_option=$wpdb->prefix."cfp_option";
 	$cfp_fields =$wpdb->prefix."cfp_fields";
 	$cfp_forms =$wpdb->prefix."cfp_forms";
 	$cfp_entries =$wpdb->prefix."cfp_entries";
+	$cfp_stats = $wpdb->prefix."cfp_stats";
+	$sqlcreate = "CREATE TABLE IF NOT EXISTS $cfp_stats
+	(
+		`id` int NOT NULL AUTO_INCREMENT,
+			`form_id` int(11),
+			`stats_key` varchar(255),
+			`details` longtext,
+			PRIMARY KEY(id)
+	)";
+	dbDelta( $sqlcreate );
+	
 	$sqlcreate = "CREATE TABLE IF NOT EXISTS $cfp_option
 	(
 		`id` int NOT NULL AUTO_INCREMENT,
@@ -41,8 +52,8 @@ function activate_contact_form_pro_plugin()
 		(6, 'adminemail', ''),
 		(7, 'adminnotification', 'no'),
 		(8, 'from_email', ''),
-		(9, 'userip', 'no'),
-		(10, 'cfp_theme','simple')";
+		(9, 'userip', 'yes'),
+		(10, 'cfp_theme','default')";
 		$wpdb->query($insert);
 
 	$sqlcreate = "CREATE TABLE IF NOT EXISTS $cfp_entries
@@ -69,6 +80,7 @@ function activate_contact_form_pro_plugin()
   `redirect_page_id` int(11) NOT NULL,
   `redirect_url_url` longtext NOT NULL,
   `send_email` int(11) NOT NULL,
+  `form_option` longtext,
   PRIMARY KEY (`id`)
 )";
 	dbDelta( $sqlcreate );
@@ -102,24 +114,59 @@ function cfp_update_db_check()
 	 $save_db_version =  floatval(get_site_option( 'cfp_db_version','1.0' ));
     if ( $save_db_version < $cfp_db_version ) 
 	{	
-		$insert="INSERT INTO $cfp_option VALUES
+		$insert="INSERT IGNORE INTO $cfp_option VALUES
 		(6, 'adminemail', ''),
 		(7, 'adminnotification', 'no')";
 		$wpdb->query($insert);
 		
-		$insert="INSERT INTO $cfp_option VALUES
+		$insert="INSERT IGNORE INTO $cfp_option VALUES
 		(8, 'from_email', '')";
 		$wpdb->query($insert);
 		
-		$insert="INSERT INTO $cfp_option VALUES
+		$insert="INSERT IGNORE INTO $cfp_option VALUES
 		(9, 'userip', 'no')";
 		$wpdb->query($insert);
 		
-		$insert="INSERT INTO $cfp_option VALUES
+		$qry="select `value` from $cfp_option where fieldname='cfp_theme'";
+		$cfp_theme = $wpdb->get_var($qry);
+		
+		if(isset($cfp_theme) && $cfp_theme!="")
+		{
+			if($cfp_theme=='default')
+			{
+				$wpdb->query("update $cfp_option set value='classic' where fieldname='cfp_theme'");
+			}
+			else
+			{
+				$wpdb->query("update $cfp_option set value='default' where fieldname='cfp_theme'");	
+			}
+		}
+		
+		$insert="INSERT IGNORE INTO $cfp_option VALUES
 		(10, 'cfp_theme', 'default')";
 		$wpdb->query($insert);
 		
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		$cfp_stats = $wpdb->prefix."cfp_stats";
+		$sqlcreate = "CREATE TABLE IF NOT EXISTS $cfp_stats
+		(
+			`id` int NOT NULL AUTO_INCREMENT,
+			`form_id` int(11),
+			`stats_key` varchar(255),
+			`details` longtext,
+			PRIMARY KEY(id)
+		)";
+		dbDelta( $sqlcreate );
+		
+		$cfp_forms =$wpdb->prefix."cfp_forms";
+		$cfpform = $wpdb->get_row("SELECT * FROM $cfp_forms");
+		//Add column if not present.
+		if(!isset($cfpform->form_option)){
+			$wpdb->query("ALTER TABLE $cfp_forms ADD form_option longtext");
+		}
+		
 		update_option( "cfp_db_version", $cfp_db_version );
+		
 	}
 }
 
@@ -127,7 +174,11 @@ add_action( 'wp_enqueue_scripts', 'cfp_frontend_script' );
 add_action( 'admin_init', 'cfp_admin_script' );
 /*Defines enqueue style/ script for front end*/
 function cfp_frontend_script() {
-	//wp_enqueue_style( 'cfp-style.css', plugin_dir_url(__FILE__) . 'css/cfp-style.css');
+	global $wpdb;
+	$cfp_option=$wpdb->prefix."cfp_option";
+	$qry="select `value` from $cfp_option where fieldname='cfp_theme'";
+	$cfp_theme = $wpdb->get_var($qry);
+	wp_enqueue_style( 'cfp-style-'.$cfp_theme, plugin_dir_url(__FILE__) . 'css/cfp-style-'.$cfp_theme.'.css');
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script('jquery-ui-datepicker');
 	wp_enqueue_style('jquery-style', 'http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css');
@@ -141,6 +192,10 @@ function cfp_admin_script() {
 	wp_enqueue_Script('jquery-ui-sortable');
 	wp_register_style('cfp_googleFonts', 'http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700');
     wp_enqueue_style( 'cfp_googleFonts');
+	wp_enqueue_script( 'ZeroClipboard.js',  plugin_dir_url(__FILE__) . 'js/ZeroClipboard.js');	
+	wp_enqueue_script( 'jquery-ui-tooltip');
+	wp_enqueue_style( 'cfp_analytics', plugin_dir_url(__FILE__) . 'css/cfp_analytics.css');
+	wp_enqueue_script( 'cfp_jsapi', 'https://www.google.com/jsapi');	
 }
 
 /*Defines menu and sub-menu items in dashboard*/
@@ -154,7 +209,9 @@ function contact_form_pro_menu()
 	add_submenu_page("","Manage Form Fields","Manage Form Fields","manage_options","cfp_manage_form_fields","cfp_manage_form_fields");
 	add_submenu_page("","View Entry","View Entry","manage_options","cfp_view_entry","cfp_view_entry");
 	add_submenu_page("","Add Field","Add Field","manage_options","cfp_add_field","cfp_add_field");
-	/*add_submenu_page("cfp_manage_forms","Pro Features","Pro Features","manage_options","cfp_Pro","cfp_Pro");*/
+	add_submenu_page("cfp_manage_forms","Upgrade","Upgrade","manage_options","cfp_Pro","cfp_Pro");
+	add_submenu_page("cfp_manage_forms","Analytics (Demo)","Analytics (Demo)","manage_options","cfp_analytics_demo","cfp_analytics_demo");
+	add_submenu_page("cfp_manage_forms","Support","Support","manage_options","cfp_support","cfp_support");
 }
 
 function add_cfp_menu_adminbar() {
@@ -169,10 +226,19 @@ function add_cfp_menu_adminbar() {
 }
 add_action( 'wp_before_admin_bar_render', 'add_cfp_menu_adminbar' ); 
 
-
 function cfp_Pro()
 {
 	include 'pro_features.php';	
+}
+
+function cfp_analytics_demo()
+{
+	include 'cfp_analytics.php';	
+}
+
+function cfp_support()
+{
+	include 'cfp_support.php';	
 }
 
 function cfp_settings()
@@ -213,11 +279,15 @@ function cfp_manage_form_fields()
 add_shortcode( 'CFP_Form', 'CFP_view_form_fun' );
 function CFP_view_form_fun($content)
 {
-	include 'view-form.php';
+	global $wpdb;
+	$cfp_option=$wpdb->prefix."cfp_option";
+	$qry="select `value` from $cfp_option where fieldname='cfp_theme'";
+	$cfp_theme = $wpdb->get_var($qry);
+	include 'view-form-'.$cfp_theme.'.php';
 }
 
-add_action('wp_ajax_set_field_order', 'CFP_set_field_order');
-add_action('wp_ajax_nopriv_set_field_order', 'CFP_set_field_order');
+add_action('wp_ajax_cfp_set_field_order', 'CFP_set_field_order');
+add_action('wp_ajax_nopriv_cfp_set_field_order', 'CFP_set_field_order');
 function CFP_set_field_order()
 {
 	global $wpdb;
