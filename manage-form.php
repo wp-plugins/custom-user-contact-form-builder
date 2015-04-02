@@ -38,7 +38,7 @@ $entries = $wpdb->get_results( "SELECT * FROM $cfp_forms order by id asc LIMIT $
 
 <form name="forms" id="forms" method="post" action="admin.php?page=cfp_manage_forms" >
 <div class="ucf_pro_banner" style="margin-bottom:0 !important; overflow:visible;">
-<div class="analytics_banner"><a href="admin.php?page=analytics_demo"><img src="<?php echo $path;?>images/analytics_banner.jpg" /></a></div>
+<div class="analytics_banner"><a href="admin.php?page=cfp_analytics_demo"><img src="<?php echo $path;?>images/analytics_banner.jpg" /></a></div>
 
 	<div class="banner" id="bannerclose">
        <a href="admin.php?page=cfp_Pro"><img src="<?php echo $path;?>images/ucf_form_banner.jpg" /></a>
