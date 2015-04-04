@@ -361,12 +361,12 @@ border:0px;
         <li class="field-analytics"><span>Field Analytics<span class="pro-right-icon" onMouseOver="cfptooltip2(this,'.field-analytics-popup')" title=""></span></span></li>
         </ul>
         <div class="pro-footer">
-        <h4>All this for <span class="red-texs">49.95</span> <span style="color:#66bb6a;">19.95 USD</span> Only</h4>
+        <h4>All this for <span>19.90 USD</span> Only</h4>
         
         <div class="green-box">
         <a href="http://cmshelplive.com/accounts/cart.php?a=add&pid=67" target="_blank">BUY NOW</a></div>
         </div>
-        <p class="limited-tex">*Limited time offer</p>
+        <!--<p class="limited-tex">*Limited time offer</p>-->
     
     
     </div><!-------pro-features-gold-right----->
