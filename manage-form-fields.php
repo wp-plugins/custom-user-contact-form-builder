@@ -8,6 +8,9 @@ $path =  plugin_dir_url(__FILE__);
 $form_id = $_REQUEST['form_id'];
 if(isset($_POST['remove']))
 {	
+	$retrieved_nonce = $_REQUEST['_wpnonce'];
+	if (!wp_verify_nonce($retrieved_nonce, 'delete_cfp_fields' ) ) die( 'Failed security check' );
+
 	$ids = implode(',',$_POST['selected']);
 	$query = "delete from $cfp_fields where Id in($ids)";
 	$wpdb->get_results($query);
@@ -135,6 +138,7 @@ echo $fieldnamehalf.'...';
       </div>
     </div>
   </div>
+<?php wp_nonce_field('delete_cfp_fields'); ?>
 </form>
 <script type="text/javascript">
     jQuery(function () {
@@ -155,7 +159,15 @@ echo $fieldnamehalf.'...';
 </script>
 <script>
     function manage_fields(id, action) {
-        window.location = 'admin.php?page=cfp_add_field&formid=' + <?php echo $form_id; ?> +'&id=' + id + '&action=' + action;
+		if(action=='delete')
+		{
+			 <?php $nonce= wp_create_nonce('delete_cfp_field'); ?>
+       		 window.location = 'admin.php?page=cfp_add_field&formid=' + <?php echo $form_id; ?> +'&id=' + id + '&action=' + action + '&_wpnonce=<?php echo $nonce ?>';
+		}
+		else
+		{
+       	 window.location = 'admin.php?page=cfp_add_field&formid=' + <?php echo $form_id; ?> +'&id=' + id + '&action=' + action;
+		}
     }
 </script>
 <script>

@@ -95,7 +95,9 @@ else
 }
 if(isset($_POST['submit']) && $submit==1 ) // Checks if the submit button is pressed or not
 {
-		
+	$retrieved_nonce = $_REQUEST['_wpnonce'];
+	if (!wp_verify_nonce($retrieved_nonce, 'view_cfp_form' ) ) die( 'Failed security check' );
+	
 	$stats = $wpdb->get_row( "SELECT * FROM $cfp_stats where form_id ='".$content['id']."' and stats_key='".$_POST['cfp_key']."'");
 	$stats_details = maybe_unserialize($stats->details);
 	$stats_details['submitted'] = "yes";
@@ -361,6 +363,7 @@ $wpdb->query($insert);
 <!--HTML for displaying registration form-->
 <div id="upb-formm">
   <form enctype="multipart/form-data" method="post" action="" id="cfp_contact_form" name="cfp_contact_form">
+  <?php wp_nonce_field('view_cfp_form'); ?>
     <input type="hidden" value="<?php echo time();?>" name="cfp_timestamp" />
   <input type="hidden" value="<?php echo $detail['key'];?>" name="cfp_key" />
     <div class="info-textt bold-tex"><?php echo $custom_text;?></div>

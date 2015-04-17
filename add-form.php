@@ -6,6 +6,9 @@ $cfp_forms =$wpdb->prefix."cfp_forms";
 $path =  plugin_dir_url(__FILE__); 
 if(isset($_POST['submit_form']) && trim($_POST['form_name'])!="")
 {
+	$retrieved_nonce = $_REQUEST['_wpnonce'];
+	if (!wp_verify_nonce($retrieved_nonce, 'save_cfp_add_form' ) ) die( 'Failed security check' );
+
 	$formoptions = array();
 	$formoptions['submit_button_label'] = $_POST['submit_button_label'];
 	$options = maybe_serialize($formoptions);
@@ -183,6 +186,7 @@ $args = array(
     <div class="cfp-form-footer">
       <div class="cfp-form-button">
         <input type="hidden" name="form_id" id="form_id" value="<?php if(isset($_REQUEST['id'])) echo $_REQUEST['id']?>" />
+        <?php wp_nonce_field('save_cfp_add_form'); ?>
         <input type="submit" value="Save" name="submit_form" id="submit_form" tabindex="14" />
         <input type="reset" />
         <a href="admin.php?page=cfp_manage_forms" class="cancel_button">Cancel</a>

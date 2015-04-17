@@ -18,6 +18,9 @@ if($from_email_address=="")
 
 if(isset($_REQUEST['delete_entry']) && isset($_REQUEST['id']))
 {
+	$retrieved_nonce = $_REQUEST['_wpnonce'];
+	if (!wp_verify_nonce($retrieved_nonce, 'delete_cfp_entry' ) ) die( 'Failed security check' );
+
 	$qry = "delete from $cfp_entries where id =".$_REQUEST['id'];
 	$wpdb->query($qry);
 	wp_redirect('admin.php?page=cfp_entries&form_id='.$entry->form_id);exit;
@@ -29,6 +32,9 @@ $value = maybe_unserialize($entry->value);
 
 if(isset($_REQUEST['user_enable']) && isset($_REQUEST['id']))
 {
+	  $retrieved_nonce = $_REQUEST['_wpnonce'];
+	  if (!wp_verify_nonce($retrieved_nonce, 'approve_cfp_entry' ) ) die( 'Failed security check' );
+
 	  $user_name = $value['user_name']; // receiving username
 	  $user_email = $value['user_email']; // receiving email address
 	  $inputPassword = $value['user_pass']; // receiving password
@@ -128,6 +134,7 @@ if(isset($_REQUEST['user_enable']) && isset($_REQUEST['id']))
     <input name="Back" type="submit" autofocus id="Back" title="Back" value="Back" onClick="backfun(<?php echo $entry->form_id;?>)">
     </span> <span class="cfp-duplicate-button">
     <form action="admin.php?page=cfp_view_entry">
+    <?php wp_nonce_field('delete_cfp_entry'); ?>
       <input type="submit" value="Delete" name="delete_entry">
       <input type="hidden" value="<?php echo $entry->id;?>" name="id" />
       <input type="hidden" value="cfp_view_entry" name="page" >
@@ -139,6 +146,7 @@ if($entry->form_type=='reg_form' && $entry->user_approval=='no')
 {
 ?>
     <form action="admin.php?page=cfp_view_entry">
+   	 <?php wp_nonce_field('approve_cfp_entry'); ?>
       <input type="submit" value="Approve Registration" name="user_enable">
       <input type="hidden" value="<?php echo $entry->id;?>" name="id" />
       <input type="hidden" value="cfp_view_entry" name="page" >

@@ -6,6 +6,9 @@ $cfp_option=$wpdb->prefix."cfp_option";
 $path =  plugin_dir_url(__FILE__); 
 if(isset($_REQUEST['saveoption']))
 {
+	$retrieved_nonce = $_REQUEST['_wpnonce'];
+	if (!wp_verify_nonce($retrieved_nonce, 'save_cfp_global_setting' ) ) die( 'Failed security check' );
+
 	if(!isset($_REQUEST['enable_captcha'])) $_REQUEST['enable_captcha']='no';
 	if(!isset($_REQUEST['admin_notification'])) $_REQUEST['admin_notification']='no';
 	if(!isset($_REQUEST['userip'])) $_REQUEST['userip']='no';
@@ -137,6 +140,7 @@ $cfp_theme = $wpdb->get_var($qry);
     <br>
     <div class="cfp-form-footer">
       <div class="cfp-form-button">
+      <?php wp_nonce_field('save_cfp_global_setting'); ?>
         <input type="submit"  class="button-primary" value="Save" name="saveoption" id="saveoption" />
         <a href="admin.php?page=cfp_manage_forms" class="cancel_button">Cancel</a>
       </div>
