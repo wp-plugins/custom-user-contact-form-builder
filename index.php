@@ -3,7 +3,7 @@
 	Plugin Name: Contact Form Pro
 	Plugin URI: https://wordpress.org/plugins/custom-user-contact-form-builder/
 	Description: An easy to use, simple but powerful contact form system that also tracks submissions through a nifty interface. You can create unlimited forms with custom fields and use them through WordPress shortcode system.
-	Version: 2.1.0
+	Version: 2.1.1
 	Author: CMSHelpLive
 	Author URI: https://profiles.wordpress.org/cmshelplive
 	License: gpl2
