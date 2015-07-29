@@ -3,7 +3,7 @@
 	Plugin Name: Contact Form Pro
 	Plugin URI: https://wordpress.org/plugins/custom-user-contact-form-builder/
 	Description: An easy to use, simple but powerful contact form system that also tracks submissions through a nifty interface. You can create unlimited forms with custom fields and use them through WordPress shortcode system.
-	Version: 2.1.1
+	Version: 2.1.2
 	Author: CMSHelpLive
 	Author URI: https://profiles.wordpress.org/cmshelplive
 	License: gpl2
@@ -279,11 +279,15 @@ function cfp_manage_form_fields()
 add_shortcode( 'CFP_Form', 'CFP_view_form_fun' );
 function CFP_view_form_fun($content)
 {
+	ob_start();
 	global $wpdb;
 	$cfp_option=$wpdb->prefix."cfp_option";
 	$qry="select `value` from $cfp_option where fieldname='cfp_theme'";
 	$cfp_theme = $wpdb->get_var($qry);
 	include 'view-form-'.$cfp_theme.'.php';
+	$output_string=ob_get_contents();
+	ob_end_clean();
+	return $output_string;
 }
 
 add_action('wp_ajax_cfp_set_field_order', 'CFP_set_field_order');

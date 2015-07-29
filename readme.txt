@@ -6,7 +6,7 @@ Tags: custom contact, custom form fields, custom contact fields, multiple contac
 
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,13 @@ Yes, you can change field order of custom fields by drag and drop method in dash
 
 == Changelog ==
 
+= 2.1.2 =
+
+* Improved HTML Structure
+* Fixed a bug where the form was always appearing on top, despite pasting the shortcode within content.
+* Fixed a bug that did not allowed showing multiple forms on a page.
+
+
 = 2.1.1 =
 * Added new banner
 
@@ -147,6 +154,13 @@ Yes, you can change field order of custom fields by drag and drop method in dash
 
 
 == Upgrade Notice ==
+
+= 2.1.2 =
+
+* Improved HTML Structure
+* Fixed a bug where the form was always appearing on top, despite pasting the shortcode within content.
+* Fixed a bug that did not allowed showing multiple forms on a page.
+
 
 = 2.1.1 =
 * Added new banner
